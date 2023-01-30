@@ -1,0 +1,15 @@
+C:\Users\aarat\source\repos\mc\bin\Debug\net6.0\mc.exe
+C:\Users\aarat\source\repos\mc\bin\Debug\net6.0\mc.deps.json
+C:\Users\aarat\source\repos\mc\bin\Debug\net6.0\mc.runtimeconfig.json
+C:\Users\aarat\source\repos\mc\bin\Debug\net6.0\mc.dll
+C:\Users\aarat\source\repos\mc\bin\Debug\net6.0\mc.pdb
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.csproj.AssemblyReference.cache
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.AssemblyInfoInputs.cache
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.AssemblyInfo.cs
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.csproj.CoreCompileInputs.cache
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.dll
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\refint\mc.dll
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.pdb
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\mc.genruntimeconfig.cache
+C:\Users\aarat\source\repos\mc\obj\Debug\net6.0\ref\mc.dll
