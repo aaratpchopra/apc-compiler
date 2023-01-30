@@ -2,7 +2,7 @@
 
 namespace APCCompiler.CodeAnalysis
 {
-    class Evaluator
+    public sealed class Evaluator
     {
         private readonly ExpressionSyntax _root;
         public Evaluator(ExpressionSyntax root)
@@ -17,8 +17,8 @@ namespace APCCompiler.CodeAnalysis
 
         private int EvaluateExpression(ExpressionSyntax root)
         {
-            if (root is NumberExpressionSyntax n)
-                return (int)n.NumberToken.Value;
+            if (root is LiteralExpressionSyntax n)
+                return (int)n.LiteralToken.Value;
 
             if (root is BinaryExpressionSyntax b)
             {

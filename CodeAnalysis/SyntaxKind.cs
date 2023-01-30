@@ -1,7 +1,8 @@
 ﻿namespace APCCompiler.CodeAnalysis
 {
-    enum SyntaxKind
+    public enum SyntaxKind
     {
+        // Tokens
         NumberToken,
         WhiteSpaceToken,
         PlusToken,
@@ -12,7 +13,9 @@
         CloseParenthesisToken,
         EndOfFileToken,
         BadToken,
-        NumberExpression,
+
+        // Expressions
+        LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression
     }

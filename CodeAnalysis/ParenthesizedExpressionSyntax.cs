@@ -2,7 +2,7 @@
 
 namespace APCCompiler.CodeAnalysis
 {
-    sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
+    public sealed class ParenthesizedExpressionSyntax : ExpressionSyntax
     {
         public ParenthesizedExpressionSyntax(SyntaxToken openedParenthesisToken, ExpressionSyntax expression, SyntaxToken closedParenthesisToken)
         {

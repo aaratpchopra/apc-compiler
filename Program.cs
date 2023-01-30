@@ -2,9 +2,9 @@
 
 namespace APCCompiler
 {
-    internal class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             bool showTree = false;
             while (true)
@@ -14,7 +14,6 @@ namespace APCCompiler
                 if (string.IsNullOrWhiteSpace(line))
                     return;
 
-                var color = Console.ForegroundColor;
                 var syntaxTree = SyntaxTree.Parse(line);
 
                 if (line == "#showTree")
@@ -35,7 +34,7 @@ namespace APCCompiler
                     
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     PrettyPrint(syntaxTree.Root);
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 }
 
                 if (syntaxTree.Diagnostics.Any())
@@ -44,7 +43,7 @@ namespace APCCompiler
 
                     foreach (var error in syntaxTree.Diagnostics)
                         Console.WriteLine(error);
-                    Console.ForegroundColor = color;
+                    Console.ResetColor();
                 } else
                 {
                     var evaluator = new Evaluator(syntaxTree.Root);
