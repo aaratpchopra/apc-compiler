@@ -1,4 +1,4 @@
-﻿namespace APCCompiler.CodeAnalysis
+﻿namespace APCCompiler.CodeAnalysis.Syntax
 {
     public enum SyntaxKind
     {
@@ -17,6 +17,7 @@
         // Expressions
         LiteralExpression,
         BinaryExpression,
-        ParenthesizedExpression
+        ParenthesizedExpression,
+        UnaryExpression
     }
 }

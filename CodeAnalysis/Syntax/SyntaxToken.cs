@@ -1,6 +1,4 @@
-﻿using APCCompiler.CodeAnalysis;
-
-namespace APCCompiler.CodeAnalysis
+﻿namespace APCCompiler.CodeAnalysis.Syntax
 {
     public class SyntaxToken : SyntaxNode
     {

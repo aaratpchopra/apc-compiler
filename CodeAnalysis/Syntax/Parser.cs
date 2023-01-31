@@ -1,6 +1,6 @@
 ﻿using APCCompiler.CodeAnalysis;
 
-namespace APCCompiler.CodeAnalysis
+namespace APCCompiler.CodeAnalysis.Syntax
 {
     internal sealed class Parser
     {
@@ -61,35 +61,61 @@ namespace APCCompiler.CodeAnalysis
             return new SyntaxTree(_diagnostics, expression, endOfFileToken);
         }
 
-        private ExpressionSyntax ParseExpression()
+        private ExpressionSyntax ParseExpression(int parentPrecedence = 0)
         {
-            return ParseTerm();
-        }
+            ExpressionSyntax left;
 
-        public ExpressionSyntax ParseTerm()
-        {
-            var left = ParseFactor();
-            while (Current.Kind == SyntaxKind.PlusToken || Current.Kind == SyntaxKind.MinusToken)
+            var unaryOperatorPrecedence = GetUnaryOperatorPrecedence(Current.Kind);
+            if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
             {
                 var operatorToken = NextToken();
-                var right = ParseFactor();
+                var expression = ParseExpression(unaryOperatorPrecedence);
+                left = new UnaryExpressionSyntax(operatorToken, expression);
+            }
+            else
+            {
+                left = ParsePrimaryExpression();
+            }
+
+            while (true)
+            {
+                var precedence = GetBinaryOperatorPrecedence(Current.Kind);
+                if (precedence == 0 || precedence <= parentPrecedence)
+                    break;
+                var operatorToken = NextToken();
+                var right = ParseExpression(precedence);
                 left = new BinaryExpressionSyntax(left, operatorToken, right);
             }
             return left;
         }
 
-        public ExpressionSyntax ParseFactor()
+        private static int GetBinaryOperatorPrecedence(SyntaxKind kind)
         {
-            var left = ParsePrimaryExpression();
-            while (Current.Kind == SyntaxKind.StarToken || Current.Kind == SyntaxKind.SlashToken)
+            switch (kind)
             {
-                var operatorToken = NextToken();
-                var right = ParsePrimaryExpression();
-                left = new BinaryExpressionSyntax(left, operatorToken, right);
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
+                    return 1;
+                case SyntaxKind.StarToken:
+                case SyntaxKind.SlashToken:
+                    return 2;
+                default:
+                    return 0;
             }
-            return left;
         }
 
+        private static int GetUnaryOperatorPrecedence(SyntaxKind kind)
+        {
+            switch (kind)
+            {
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
+                    return 3;
+
+                default:
+                    return 0;
+            }
+        }
 
         private ExpressionSyntax ParsePrimaryExpression()
         {
