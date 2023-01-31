@@ -1,4 +1,5 @@
 ﻿using APCCompiler.CodeAnalysis;
+using mc.CodeAnalysis.Syntax;
 
 namespace APCCompiler.CodeAnalysis.Syntax
 {
@@ -65,7 +66,7 @@ namespace APCCompiler.CodeAnalysis.Syntax
         {
             ExpressionSyntax left;
 
-            var unaryOperatorPrecedence = GetUnaryOperatorPrecedence(Current.Kind);
+            var unaryOperatorPrecedence = SyntaxFacts.GetUnaryOperatorPrecedence(Current.Kind);
             if (unaryOperatorPrecedence != 0 && unaryOperatorPrecedence >= parentPrecedence)
             {
                 var operatorToken = NextToken();
@@ -79,7 +80,7 @@ namespace APCCompiler.CodeAnalysis.Syntax
 
             while (true)
             {
-                var precedence = GetBinaryOperatorPrecedence(Current.Kind);
+                var precedence = SyntaxFacts.GetBinaryOperatorPrecedence(Current.Kind);
                 if (precedence == 0 || precedence <= parentPrecedence)
                     break;
                 var operatorToken = NextToken();
@@ -89,45 +90,24 @@ namespace APCCompiler.CodeAnalysis.Syntax
             return left;
         }
 
-        private static int GetBinaryOperatorPrecedence(SyntaxKind kind)
-        {
-            switch (kind)
-            {
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                    return 1;
-                case SyntaxKind.StarToken:
-                case SyntaxKind.SlashToken:
-                    return 2;
-                default:
-                    return 0;
-            }
-        }
-
-        private static int GetUnaryOperatorPrecedence(SyntaxKind kind)
-        {
-            switch (kind)
-            {
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                    return 3;
-
-                default:
-                    return 0;
-            }
-        }
-
         private ExpressionSyntax ParsePrimaryExpression()
         {
-            if (Current.Kind == SyntaxKind.OpenParenthesisToken)
+            switch (Current.Kind)
             {
-                var left = NextToken();
-                var expression = ParseExpression();
-                var right = MatchToken(SyntaxKind.CloseParenthesisToken);
-                return new ParenthesizedExpressionSyntax(left, expression, right);
+                case SyntaxKind.OpenParenthesisToken:
+                    var left = NextToken();
+                    var expression = ParseExpression();
+                    var right = MatchToken(SyntaxKind.CloseParenthesisToken);
+                    return new ParenthesizedExpressionSyntax(left, expression, right);
+                case SyntaxKind.TrueKeyword:
+                case SyntaxKind.FalseKeyword:
+                    var keywordToken = NextToken();
+                    var value = Current.Kind == SyntaxKind.TrueKeyword;
+                    return new LiteralExpressionSyntax(keywordToken, value);
+                default:
+                    var numberToken = MatchToken(SyntaxKind.NumberToken);
+                    return new LiteralExpressionSyntax(numberToken);
             }
-            var numberToken = MatchToken(SyntaxKind.NumberToken);
-            return new LiteralExpressionSyntax(numberToken);
         }
     }
 }

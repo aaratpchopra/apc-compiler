@@ -2,13 +2,19 @@
 {
     public sealed class LiteralExpressionSyntax : ExpressionSyntax
     {
-        public SyntaxToken LiteralToken { get; }
-
-        public LiteralExpressionSyntax(SyntaxToken literalToken)
+        public LiteralExpressionSyntax(SyntaxToken literalToken) 
+            : this(literalToken, literalToken.Value)
         {
-            LiteralToken = literalToken;
         }
 
+        public LiteralExpressionSyntax(SyntaxToken literalToken, object value)
+        {
+            LiteralToken = literalToken;
+            Value = value;
+        }
+
+        public SyntaxToken LiteralToken { get; }
+        public object Value { get; }
         public override SyntaxKind Kind => SyntaxKind.LiteralExpression;
         public override IEnumerable<SyntaxNode> GetChildren()
         {

@@ -13,11 +13,16 @@
         CloseParenthesisToken,
         EndOfFileToken,
         BadToken,
+        IdentifierToken,
+
+        // Keywords
+        TrueKeyword,
+        FalseKeyword,
 
         // Expressions
         LiteralExpression,
         BinaryExpression,
         ParenthesizedExpression,
-        UnaryExpression
+        UnaryExpression,
     }
 }
