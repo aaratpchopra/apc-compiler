@@ -1,4 +1,5 @@
 ﻿using APCCompiler.CodeAnalysis;
+using APCCompiler.CodeAnalysis.Binding;
 using APCCompiler.CodeAnalysis.Syntax;
 
 namespace APCCompiler
@@ -16,6 +17,11 @@ namespace APCCompiler
                     return;
 
                 var syntaxTree = SyntaxTree.Parse(line);
+
+                var binder = new Binder();
+                var bountExpression = binder.BindExpression(syntaxTree.Root);
+                var parserAndLexerDiagnostics = syntaxTree.Diagnostics;
+                parserAndLexerDiagnostics.Concat(binder.Diagnostics);
 
                 if (line == "#showTree")
                 {
@@ -38,7 +44,7 @@ namespace APCCompiler
                     Console.ResetColor();
                 }
 
-                if (syntaxTree.Diagnostics.Any())
+                if (parserAndLexerDiagnostics.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
@@ -47,7 +53,7 @@ namespace APCCompiler
                     Console.ResetColor();
                 } else
                 {
-                    var evaluator = new Evaluator(syntaxTree.Root);
+                    var evaluator = new Evaluator(bountExpression);
                     var results = evaluator.Evaluate();
                     Console.WriteLine(results);
                 }
