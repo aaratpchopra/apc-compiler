@@ -93,8 +93,6 @@ namespace APCCompiler.CodeAnalysis.Syntax
                     return new SyntaxToken(SyntaxKind.OpenParenthesisToken, _position++, "(", null);
                 case ')':
                     return new SyntaxToken(SyntaxKind.CloseParenthesisToken, _position++, ")", null);
-                case '!':
-                    return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
                 case '&':
                     if (Lookahead == '&')
                         return new SyntaxToken(SyntaxKind.LogicalANDToken, _position += 2, "&&", null);
@@ -103,6 +101,15 @@ namespace APCCompiler.CodeAnalysis.Syntax
                     if (Lookahead == '|')
                         return new SyntaxToken(SyntaxKind.LogicalORToken, _position += 2, "||", null);
                     break;
+                case '=':
+                    if (Lookahead == '=')
+                        return new SyntaxToken(SyntaxKind.EqualEqualToken, _position += 2, "==", null);
+                    break;
+                case '!':
+                    if (Lookahead == '=')
+                        return new SyntaxToken(SyntaxKind.NotEqualToken, _position += 2, "!=", null);
+                    else
+                        return new SyntaxToken(SyntaxKind.BangToken, _position++, "!", null);
             }
 
             _diagnostics.Add($"ERROR: bad character input: {Current}");

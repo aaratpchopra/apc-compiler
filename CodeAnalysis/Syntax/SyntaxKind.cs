@@ -27,5 +27,7 @@
         BinaryExpression,
         ParenthesizedExpression,
         UnaryExpression,
+        EqualEqualToken,
+        NotEqualToken,
     }
 }

@@ -47,6 +47,8 @@ namespace APCCompiler.CodeAnalysis
                     BoundBinaryOperatorKind.Division => (int) left / (int) right,
                     BoundBinaryOperatorKind.LogicalAND => (bool) left && (bool) right,
                     BoundBinaryOperatorKind.LogicalOR => (bool) left || (bool) right,
+                    BoundBinaryOperatorKind.LogicalEqual => Equals(left, right),
+                    BoundBinaryOperatorKind.LogicalNotEqual=> !Equals(left, right),
                     _ => throw new Exception($"Unexpected binary operator: {b.Op.Kind}")
                 };
             }

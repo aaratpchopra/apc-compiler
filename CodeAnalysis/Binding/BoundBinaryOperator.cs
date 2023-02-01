@@ -9,20 +9,25 @@ namespace APCCompiler.CodeAnalysis.Binding
         {
         }
 
-        private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Type leftType, Type rightType, Type resultType)
+        private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Type operandType, Type type)
+            : this(syntaxKind, kind, operandType, operandType, type)
+        {
+        }
+
+        private BoundBinaryOperator(SyntaxKind syntaxKind, BoundBinaryOperatorKind kind, Type leftType, Type rightType, Type type)
         {
             SyntaxKind = syntaxKind;
             Kind = kind;
             LeftType = leftType;
             RightType = rightType;
-            ResultType = resultType;
+            Type = type;
         }
 
         public SyntaxKind SyntaxKind { get; }
         public BoundBinaryOperatorKind Kind { get; }
         public Type LeftType { get; }
         public Type RightType { get; }
-        public Type ResultType { get; }
+        public Type Type { get; }
 
         private static BoundBinaryOperator[] _operators =
         {
@@ -31,7 +36,11 @@ namespace APCCompiler.CodeAnalysis.Binding
             new BoundBinaryOperator(SyntaxKind.StarToken, BoundBinaryOperatorKind.Multiplication, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.SlashToken, BoundBinaryOperatorKind.Division, typeof(int)),
             new BoundBinaryOperator(SyntaxKind.LogicalANDToken, BoundBinaryOperatorKind.LogicalAND, typeof(bool)),
-            new BoundBinaryOperator(SyntaxKind.LogicalORToken, BoundBinaryOperatorKind.LogicalOR, typeof(bool))
+            new BoundBinaryOperator(SyntaxKind.LogicalORToken, BoundBinaryOperatorKind.LogicalOR, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualEqualToken, BoundBinaryOperatorKind.LogicalEqual, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.NotEqualToken, BoundBinaryOperatorKind.LogicalNotEqual, typeof(int), typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.EqualEqualToken, BoundBinaryOperatorKind.LogicalEqual, typeof(bool)),
+            new BoundBinaryOperator(SyntaxKind.NotEqualToken, BoundBinaryOperatorKind.LogicalNotEqual, typeof(bool)),
         };
 
         public static BoundBinaryOperator Bind(SyntaxKind syntaxKind, Type leftType, Type rightType)
