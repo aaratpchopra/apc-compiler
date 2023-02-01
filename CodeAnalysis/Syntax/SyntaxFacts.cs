@@ -13,12 +13,16 @@ namespace mc.CodeAnalysis.Syntax
         {
             switch (kind)
             {
-                case SyntaxKind.PlusToken:
-                case SyntaxKind.MinusToken:
-                    return 1;
                 case SyntaxKind.StarToken:
                 case SyntaxKind.SlashToken:
+                    return 4;
+                case SyntaxKind.PlusToken:
+                case SyntaxKind.MinusToken:
+                    return 3;
+                case SyntaxKind.LogicalANDToken:
                     return 2;
+                case SyntaxKind.LogicalORToken:
+                    return 1;
                 default:
                     return 0;
             }
@@ -30,7 +34,7 @@ namespace mc.CodeAnalysis.Syntax
             {
                 case SyntaxKind.PlusToken:
                 case SyntaxKind.MinusToken:
-                    return 3;
+                    return 5;
 
                 default:
                     return 0;

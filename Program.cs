@@ -20,8 +20,7 @@ namespace APCCompiler
 
                 var binder = new Binder();
                 var bountExpression = binder.BindExpression(syntaxTree.Root);
-                var parserAndLexerDiagnostics = syntaxTree.Diagnostics;
-                parserAndLexerDiagnostics.Concat(binder.Diagnostics);
+                var parserAndLexerDiagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
 
                 if (line == "#showTree")
                 {
@@ -48,7 +47,7 @@ namespace APCCompiler
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var error in syntaxTree.Diagnostics)
+                    foreach (var error in parserAndLexerDiagnostics)
                         Console.WriteLine(error);
                     Console.ResetColor();
                 } else

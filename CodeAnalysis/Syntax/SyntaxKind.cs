@@ -14,6 +14,9 @@
         EndOfFileToken,
         BadToken,
         IdentifierToken,
+        LogicalANDToken,
+        LogicalORToken,
+        BangToken,
 
         // Keywords
         TrueKeyword,
