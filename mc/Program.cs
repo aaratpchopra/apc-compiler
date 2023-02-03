@@ -17,10 +17,9 @@ namespace APCCompiler
                     return;
 
                 var syntaxTree = SyntaxTree.Parse(line);
-
-                var binder = new Binder();
-                var bountExpression = binder.BindExpression(syntaxTree.Root);
-                var parserAndLexerDiagnostics = syntaxTree.Diagnostics.Concat(binder.Diagnostics).ToArray();
+                var compilation = new Compilation(syntaxTree);
+                var result = compilation.Evaluate();
+                var diagnostics = result.Diagnostics;
 
                 if (line == "#showTree")
                 {
@@ -43,29 +42,18 @@ namespace APCCompiler
                     Console.ResetColor();
                 }
 
-                if (parserAndLexerDiagnostics.Any())
+                if (diagnostics.Any())
                 {
                     Console.ForegroundColor = ConsoleColor.DarkRed;
 
-                    foreach (var error in parserAndLexerDiagnostics)
+                    foreach (var error in diagnostics)
                         Console.WriteLine(error);
                     Console.ResetColor();
                 }
                 else
                 {
-                    var evaluator = new Evaluator(bountExpression);
-                    var results = evaluator.Evaluate();
-                    Console.WriteLine(results);
+                    Console.WriteLine(result.Value);
                 }
-
-                /*                var lexer = new Lexer(line);
-                                while (true)
-                                {
-                                    var token = lexer.NextToken();
-                                    if (token.Kind == SyntaxKind.EndOfFileToken)
-                                        break;
-                                    Console.WriteLine($"{token.Kind}: {token.Text} | {token.Value}");
-                                }*/
             }
         }
 
@@ -96,8 +84,7 @@ namespace APCCompiler
             │   └── 1
             ├── *
             │       |-- 2
-                    
-             
+
              */
 
             indent += isLast ? "    " : "│   ";

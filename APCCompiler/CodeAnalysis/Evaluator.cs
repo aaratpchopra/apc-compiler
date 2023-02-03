@@ -1,5 +1,4 @@
-﻿using APCCompiler.CodeAnalysis.Syntax;
-using APCCompiler.CodeAnalysis.Binding;
+﻿using APCCompiler.CodeAnalysis.Binding;
 
 namespace APCCompiler.CodeAnalysis
 {

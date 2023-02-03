@@ -7,8 +7,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\APCCompiler\APCCompiler.csproj" />
-  </ItemGroup>
-
 </Project>
